@@ -1,4 +1,4 @@
-package br.com.pointdapizza.dto;
+package br.com.pointdapizza.auth.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
