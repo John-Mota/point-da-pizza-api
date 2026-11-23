@@ -1,12 +1,12 @@
 package br.com.pointdapizza;
 
-import br.com.pointdapizza.entity.Categoria;
-import br.com.pointdapizza.entity.Loja;
-import br.com.pointdapizza.entity.LojaFormaPagamento;
-import br.com.pointdapizza.entity.LojaHorario;
-import br.com.pointdapizza.entity.Produto;
-import br.com.pointdapizza.entity.ProdutoBorda;
-import br.com.pointdapizza.entity.ProdutoTamanho;
+import br.com.pointdapizza.cardapio.entity.Categoria;
+import br.com.pointdapizza.cardapio.entity.Produto;
+import br.com.pointdapizza.cardapio.entity.ProdutoBorda;
+import br.com.pointdapizza.cardapio.entity.ProdutoTamanho;
+import br.com.pointdapizza.loja.entity.Loja;
+import br.com.pointdapizza.loja.entity.LojaFormaPagamento;
+import br.com.pointdapizza.loja.entity.LojaHorario;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -58,7 +58,6 @@ public class TestSeedHelper {
             Categoria combos = criarCategoria("combos", "Combos", 7, null);
             Categoria lasanhas = criarCategoria("lasanhas", "Lasanhas", 8, "/img/lasanha-bolonhesa.jpg");
 
-            // Combos
             criarProduto("prod-promo-1", combos, "2 Pizzas G com borda de requeijão",
                 "Escolha até 2 sabores por pizza grande, ambas com borda recheada de requeijão cremoso.",
                 "62.00", "79.80", "/img/promo-2-pizzas-g-pizza-p-chocolate-coca-2l.jpg", true, 1, "Super Oferta", 1);
@@ -72,7 +71,6 @@ public class TestSeedHelper {
                 "2 pizzas grandes com borda de requeijão + 1 pizza pequena de chocolate + 1 refrigerante de 2 litros.",
                 "89.90", "109.90", "/img/promo-pizza-g-pizza-p-chocolate-refri-1l.jpg", true, 4, "Combo Família", 4);
 
-            // Pizzas
             Produto trad1 = criarProduto("prod-trad-1", pizzas, "Pizza Calabresa Acebolada",
                 "Molho artesanal, mussarela derretida, calabresa fatiada, cebola roxa e orégano.",
                 "32.90", null, "/img/pizza-calabresa-pepperoni.jpg", true, 5, "Favorita da Casa", 1);
@@ -99,7 +97,6 @@ public class TestSeedHelper {
                 "Mussarela especial combinada com goiabada cremosa derretida no forno.",
                 "32.90", null, "/img/pizza-mussarela-especial.jpg", false, null, null, 7);
 
-            // Calzones, Pasteis e Lasanhas
             criarProduto("prod-calz-1", calzones, "Calzone Frango com Requeijão",
                 "Massa fechada assada no forno, recheada com frango desfiado, mussarela, milho e requeijão.",
                 "21.90", null, "/img/calzone-assado.jpg", false, null, null, 1);
@@ -113,7 +110,6 @@ public class TestSeedHelper {
                 "Lasanha artesanal bem recheada com molho à bolonhesa, presunto e mussarela gratinada.",
                 "24.90", null, "/img/lasanha-bolonhesa.jpg", false, null, null, 1);
 
-            // Bebidas
             criarProduto("prod-beb-1", bebidas, "Refrigerante 1 Litro",
                 "Coca-Cola, Guaraná Antarctica, Pepsi ou São Geraldo de 1 litro bem gelado.",
                 "8.00", null, "/img/refri-coca-cola-1l.jpg", false, null, null, 1);

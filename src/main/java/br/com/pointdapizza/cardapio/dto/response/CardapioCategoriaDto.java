@@ -1,4 +1,4 @@
-package br.com.pointdapizza.dto;
+package br.com.pointdapizza.cardapio.dto.response;
 
 import java.util.List;
 

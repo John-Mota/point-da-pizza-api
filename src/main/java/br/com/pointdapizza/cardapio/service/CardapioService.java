@@ -1,14 +1,14 @@
-package br.com.pointdapizza.service;
+package br.com.pointdapizza.cardapio.service;
 
-import br.com.pointdapizza.dto.CardapioCategoriaDto;
-import br.com.pointdapizza.dto.CategoriaDto;
-import br.com.pointdapizza.dto.ProdutoBordaDto;
-import br.com.pointdapizza.dto.ProdutoDto;
-import br.com.pointdapizza.dto.ProdutoTamanhoDto;
-import br.com.pointdapizza.entity.Categoria;
-import br.com.pointdapizza.entity.Produto;
-import br.com.pointdapizza.entity.ProdutoBorda;
-import br.com.pointdapizza.entity.ProdutoTamanho;
+import br.com.pointdapizza.cardapio.dto.response.CardapioCategoriaDto;
+import br.com.pointdapizza.cardapio.dto.response.CategoriaDto;
+import br.com.pointdapizza.cardapio.dto.response.ProdutoBordaDto;
+import br.com.pointdapizza.cardapio.dto.response.ProdutoDto;
+import br.com.pointdapizza.cardapio.dto.response.ProdutoTamanhoDto;
+import br.com.pointdapizza.cardapio.entity.Categoria;
+import br.com.pointdapizza.cardapio.entity.Produto;
+import br.com.pointdapizza.cardapio.entity.ProdutoBorda;
+import br.com.pointdapizza.cardapio.entity.ProdutoTamanho;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
