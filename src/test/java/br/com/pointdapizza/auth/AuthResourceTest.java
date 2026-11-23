@@ -51,7 +51,7 @@ class AuthResourceTest {
               "email": "Maria@Exemplo.com",
               "endereco": "Rua das Flores, 100 - Centro",
               "complemento": "Apto 101",
-              "senha": "segredo123"
+              "senha": "Segredo123"
             }
             """;
 
@@ -67,7 +67,7 @@ class AuthResourceTest {
         assertNotNull(salvo);
         assertEquals(RoleUsuario.USER, salvo.role);
         assertNull(salvo.cadastradoPorAdmin);
-        assertNotEquals("segredo123", salvo.senhaHash);
+        assertNotEquals("Segredo123", salvo.senhaHash);
         assertTrue(salvo.senhaHash.startsWith("$2"));
 
         given()
@@ -76,7 +76,7 @@ class AuthResourceTest {
                 {
                   "nome": "Outra Pessoa",
                   "email": "MARIA@EXEMPLO.COM",
-                  "senha": "outrasenha123"
+                  "senha": "OutraSenha123"
                 }
                 """)
             .when().post("/api/auth/cadastro")
@@ -91,7 +91,7 @@ class AuthResourceTest {
                 {
                   "nome": "Outra Pessoa",
                   "telefone": "85999999999",
-                  "senha": "outrasenha123"
+                  "senha": "OutraSenha123"
                 }
                 """)
             .when().post("/api/auth/cadastro")
@@ -105,7 +105,7 @@ class AuthResourceTest {
             .body("""
                 {
                   "email": "MARIA@EXEMPLO.COM",
-                  "senha": "segredo123",
+                  "senha": "Segredo123",
                   "lembrarMe": true
                 }
                 """)
@@ -129,7 +129,7 @@ class AuthResourceTest {
             .body("""
                 {
                   "telefone": "85999999999",
-                  "senha": "segredo123"
+                  "senha": "Segredo123"
                 }
                 """)
             .when().post("/api/auth/login")
@@ -144,13 +144,61 @@ class AuthResourceTest {
             .body("""
                 {
                   "email": "maria@exemplo.com",
-                  "senha": "senhaerrada"
+                  "senha": "SenhaErrada1"
                 }
                 """)
             .when().post("/api/auth/login")
             .then()
             .statusCode(401)
             .body("mensagem", notNullValue());
+    }
+
+    @Test
+    void deveRejeitarSenhasForaDaPoliticaDeSeguranca() {
+        // Menos de 8 caracteres
+        given()
+            .contentType(ContentType.JSON)
+            .body("""
+                {
+                  "nome": "Teste Curta",
+                  "email": "curta@exemplo.com",
+                  "senha": "Abc1234"
+                }
+                """)
+            .when().post("/api/auth/cadastro")
+            .then()
+            .statusCode(400)
+            .body("campos[0].campo", equalTo("senha"));
+
+        // Sem letra maiuscula
+        given()
+            .contentType(ContentType.JSON)
+            .body("""
+                {
+                  "nome": "Teste Minuscula",
+                  "email": "minuscula@exemplo.com",
+                  "senha": "segredo123"
+                }
+                """)
+            .when().post("/api/auth/cadastro")
+            .then()
+            .statusCode(400)
+            .body("campos[0].campo", equalTo("senha"));
+
+        // Sem letra minuscula
+        given()
+            .contentType(ContentType.JSON)
+            .body("""
+                {
+                  "nome": "Teste Maiuscula",
+                  "email": "maiuscula@exemplo.com",
+                  "senha": "SEGREDO123"
+                }
+                """)
+            .when().post("/api/auth/cadastro")
+            .then()
+            .statusCode(400)
+            .body("campos[0].campo", equalTo("senha"));
     }
 
     @Test
@@ -166,7 +214,7 @@ class AuthResourceTest {
               "telefoneWhatsapp": false,
               "email": "joao.multipart@exemplo.com",
               "endereco": "Av. Beira Mar, 500",
-              "senha": "minhasenha123"
+              "senha": "MinhaSenha123"
             }
             """;
 
@@ -187,7 +235,7 @@ class AuthResourceTest {
             .body("""
                 {
                   "email": "joao.multipart@exemplo.com",
-                  "senha": "minhasenha123"
+                  "senha": "MinhaSenha123"
                 }
                 """)
             .when().post("/api/auth/login")
@@ -211,7 +259,7 @@ class AuthResourceTest {
             "prestador@pointdapizza.com",
             "Rua dos Entregadores, 10",
             null,
-            "senhaPrestador123"
+            "SenhaPrestador123"
         );
 
         assertThrows(
@@ -244,7 +292,7 @@ class AuthResourceTest {
         Usuario u = new Usuario();
         u.nome = nome;
         u.email = email;
-        u.senhaHash = BcryptUtil.bcryptHash("senha123");
+        u.senhaHash = BcryptUtil.bcryptHash("Senha123");
         u.role = role;
         u.ativo = true;
         u.persistAndFlush();
@@ -268,7 +316,7 @@ class AuthResourceTest {
             VALUES ('Prestador Teste', :email, :hash, 'PRESTADOR', :adminId)
             """)
             .setParameter("email", email)
-            .setParameter("hash", BcryptUtil.bcryptHash("senha123"))
+            .setParameter("hash", BcryptUtil.bcryptHash("Senha123"))
             .setParameter("adminId", adminId)
             .executeUpdate();
     }
