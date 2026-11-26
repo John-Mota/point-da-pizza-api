@@ -1,0 +1,46 @@
+databases:
+  - name: point-da-pizza-db
+    databaseName: point_da_pizza
+    user: point_pizza
+    plan: free
+
+services:
+  - type: web
+    name: point-da-pizza-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /q/health/live
+    envVars:
+      - key: DATASOURCE_HOST
+        fromDatabase:
+          name: point-da-pizza-db
+          property: host
+      - key: DATASOURCE_PORT
+        fromDatabase:
+          name: point-da-pizza-db
+          property: port
+      - key: DATASOURCE_PG
+        fromDatabase:
+          name: point-da-pizza-db
+          property: database
+      - key: DATASOURCE_USER
+        fromDatabase:
+          name: point-da-pizza-db
+          property: user
+      - key: DATASOURCE_PASSWORD
+        fromDatabase:
+          name: point-da-pizza-db
+          property: password
+      - key: DATASOURCE_SSL_MODE
+        value: require
+      - key: CORS_ORIGINS
+        value: /.*/
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUD_NAME
+        sync: false
+      - key: CLOUD_API_KEY
+        sync: false
+      - key: CLOUD_API_SECRET
+        sync: false
